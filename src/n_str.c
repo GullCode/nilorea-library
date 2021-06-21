@@ -221,7 +221,7 @@ N_STR *new_nstr( NSTRBYTE size )
     }
     else
     {
-        n_log( LOG_DEBUG , "size: %d" , size );
+        //n_log( LOG_DEBUG , "size: %d" , size );
 	Malloc( str -> data, char, size );
         __n_assert( str -> data, Free(str) ; return NULL );
         str -> length = size  ;
