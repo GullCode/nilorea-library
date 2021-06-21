@@ -111,23 +111,29 @@ extern "C"
     __nstr_var ; \
     })
 
+
+
 /*! Macro to quickly allocate and sprintf and cat to a N_STR * */
 #define nstrprintf_cat( __nstr_var , ... ) \
    ({ \
     if( __nstr_var ) \
     { \
-    NSTRBYTE needed = 0 ; \
-    needed = snprintf( NULL , 0 ,  __VA_ARGS__ ); \
-    if( ( __nstr_var -> written + needed + 1 ) > __nstr_var -> length ) \
+    int needed_size = 0 ; \
+    needed_size = snprintf( NULL , 0 ,  __VA_ARGS__ ); \
+    if( needed_size > 0 ) \
     { \
-    resize_nstr( __nstr_var , __nstr_var -> length + needed + 1 ); \
+    NSTRBYTE needed = needed_size + 1 ; \
+    if( ( __nstr_var -> written + needed ) > __nstr_var -> length ) \
+    { \
+    	resize_nstr( __nstr_var , __nstr_var -> length + needed ); \
     } \
-    snprintf( __nstr_var -> data + __nstr_var -> written , needed + 1 , __VA_ARGS__ ); \
-    __nstr_var -> written += needed ; \
+    snprintf( __nstr_var -> data + __nstr_var -> written , needed , __VA_ARGS__ ); \
+    __nstr_var -> written += needed_size ; \
     } \
     else \
     { \
     nstrprintf( __nstr_var , __VA_ARGS__ ); \
+    } \
     } \
     __nstr_var ; \
     } )
@@ -140,7 +146,7 @@ typedef int32_t NSTRBYTE;
 #else
 typedef __int32 NSTRBYTE;
 #endif
-/*! A double linked box including a string and his lenght */
+/*! A box including a string and his lenght */
 typedef struct N_STR
 {
     /*! the string */
@@ -242,7 +248,7 @@ int split_count( char **split_result );
 /* Free a char **tab and set it to NULL */
 int free_split_result( char ***tab );
 /* Write and fit bytes */
-int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src , NSTRBYTE src_size , NSTRBYTE additional_padding );
+int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src, NSTRBYTE src_size, NSTRBYTE additional_padding );
 /* Write and fit into the char array */
 int write_and_fit( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src );
 /* get a list of the file in a directory */

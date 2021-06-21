@@ -249,7 +249,7 @@ int main(int argc, char **argv)
         while( it < NB_ATTEMPTS )
         {
             /* get any accepted client on a network */
-            if ( ( netw = netw_accept_from_ex( server, -1 , -1 , -1, &error ) ) )
+            if ( ( netw = netw_accept_from_ex( server, -1, -1, -1, &error ) ) )
             {
                 /* someone is connected. starting some dialog */
                 if( add_threaded_process( thread_pool, &manage_client, (void *)netw, DIRECT_PROC ) == FALSE )

@@ -151,7 +151,7 @@ void process_args( int argc, char **argv, char **bind_addr, char **port, int *ip
 
 
 
-int process_clients( NETWORK_POOL *netw_pool , N_USERLIST *userlist )
+int process_clients( NETWORK_POOL *netw_pool, N_USERLIST *userlist )
 {
     __n_assert( netw_pool, return FALSE );
 
@@ -167,9 +167,9 @@ int process_clients( NETWORK_POOL *netw_pool , N_USERLIST *userlist )
         NETWORK *netw = hash_val( node, NETWORK );
         int state = -1 ;
         int thr_engine_status = -1 ;
-        netw_get_state( netw , &state , &thr_engine_status );
+        netw_get_state( netw, &state, &thr_engine_status );
         if( state != NETW_RUN || thr_engine_status != NETW_THR_ENGINE_STARTED )
-            list_push( netw_to_close ,  netw , NULL );
+            list_push( netw_to_close,  netw, NULL );
 
         /* process all data sent by the client */
         while( ( netw_exchange = netw_get_msg( netw ) ) )
@@ -179,29 +179,29 @@ int process_clients( NETWORK_POOL *netw_pool , N_USERLIST *userlist )
             {
             case( NETMSG_POSITION ):
                 // add/update object with id at position
-                userlist_add_msg_to_all( userlist , netw_exchange );
+                userlist_add_msg_to_all( userlist, netw_exchange );
                 break;
             case( NETMSG_STRING ):
                 // directly add text to chat
                 netw_pool_broadcast( netw_pool, NULL, netw_exchange );
                 break;
             case( NETMSG_PING_REQUEST ):
-              {
+            {
                 // directly send back reply
-                 int id_from = -1 , id_to = -1 , time = -1 , type = -1 ;
-                 netw_get_ping( netw_exchange , &id_from , &id_to , &time , &type );
-                 if( id_to == -1 )
-                 {
-                     netw_send_ping( netw , NETMSG_PING_REPLY , id_to , id_from , time );
-                 }
-                 else
-                 {
-                    N_STR *pingmsg = netmsg_make_ping( NETMSG_PING_REQUEST , id_from , id_to , time );
-                    userlist_add_msg_to( userlist , pingmsg , id_to );
-                 }
-              }
+                int id_from = -1, id_to = -1, time = -1, type = -1 ;
+                netw_get_ping( netw_exchange, &id_from, &id_to, &time, &type );
+                if( id_to == -1 )
+                {
+                    netw_send_ping( netw, NETMSG_PING_REPLY, id_to, id_from, time );
+                }
+                else
+                {
+                    N_STR *pingmsg = netmsg_make_ping( NETMSG_PING_REQUEST, id_from, id_to, time );
+                    userlist_add_msg_to( userlist, pingmsg, id_to );
+                }
+            }
                 //netw_get_ping( )
-                break ;
+            break ;
             case( NETMSG_GET_BOX ):
                 // a world object at position X,Y,Z with associated datas, add/update local world cache
                 break;
@@ -218,6 +218,7 @@ int process_clients( NETWORK_POOL *netw_pool , N_USERLIST *userlist )
             case( NETMSG_QUIT ):
                 n_log( LOG_INFO, "Client is asking us to quit" );
                 netw_send_quit( netw );
+                list_push( netw_to_close,  netw, NULL );
                 break ;
             default:
                 n_log( LOG_ERR, "Unknow message type %d", type );
@@ -236,7 +237,7 @@ int process_clients( NETWORK_POOL *netw_pool , N_USERLIST *userlist )
         if( netw )
         {
             n_log( LOG_DEBUG, "Closing %d", netw -> link . sock );
-            userlist_del_user( userlist , netw -> user_id );
+            userlist_del_user( userlist, netw -> user_id );
             netw_close( &netw );
         }
         else
@@ -295,10 +296,10 @@ int main( int argc, char *argv[] )
 #endif
 
     netw_pool = netw_new_pool( 1024 );
-    __n_assert( netw_pool , goto exit_server );
+    __n_assert( netw_pool, goto exit_server );
 
     userlist = userlist_new( 256 );
-    __n_assert( userlist , goto exit_server );
+    __n_assert( userlist, goto exit_server );
 
     n_log( LOG_INFO, "Creating listening network for %s:%s %d", _str( bind_addr ), _str( port ), ip_version );
     /* create listening network */
@@ -536,18 +537,18 @@ int main( int argc, char *argv[] )
             /* accept new connections */
             NETWORK *netw = NULL ;
             int error = 0 ;
-            if ( ( netw = netw_accept_from_ex(  server, 0 , 0 , -1 , &error ) ) )
+            if ( ( netw = netw_accept_from_ex(  server, 0, 0, -1, &error ) ) )
             {
-                int id = userlist_add_user( userlist , netw );
+                int id = userlist_add_user( userlist, netw );
                 if( id >= 0 )
                 {
-                    netw_set_user_id( netw , id );
+                    netw_set_user_id( netw, id );
 
                 }
                 netw_start_thr_engine( netw );
                 netw_pool_add( netw_pool, netw );
             }
-            process_clients( netw_pool , userlist );
+            process_clients( netw_pool, userlist );
             do_logic = 0 ;
         }
         if( do_network == 1 )
@@ -577,8 +578,8 @@ int main( int argc, char *argv[] )
 
             /* informations */
             N_STR *textout = NULL ;
-            nstrprintf( textout , "Nb client: %d" , netw_pool_nbclients( netw_pool) );
-            al_draw_text( font , white_color , 5 , 5 , ALLEGRO_ALIGN_LEFT , _nstr( textout ) );
+            nstrprintf( textout, "Nb client: %d", netw_pool_nbclients( netw_pool) );
+            al_draw_text( font, white_color, 5, 5, ALLEGRO_ALIGN_LEFT, _nstr( textout ) );
             free_nstr( &textout );
 
             al_flip_display();

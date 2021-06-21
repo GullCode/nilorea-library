@@ -22,9 +22,9 @@ extern "C"
 typedef struct STACK
 {
     /*! STACK array */
-	void **stack ;
+    void **stack ;
     /*! Size of array */
-	unsigned int size ;
+    unsigned int size ;
 } STACK ;
 
 /**

@@ -41,17 +41,17 @@ int GetMaxCompressedLen( unsigned int nLenSrc )
  */
 int CompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *abDst, unsigned int nLenDst )
 {
-    __n_assert( abSrc , return -1 );
-    __n_assert( abDst , return -1 );
+    __n_assert( abSrc, return -1 );
+    __n_assert( abDst, return -1 );
 
     if( nLenSrc == 0 )
     {
-        n_log( LOG_ERR , "nLenSrc (%d) <= 0" , nLenSrc );
+        n_log( LOG_ERR, "nLenSrc (%d) <= 0", nLenSrc );
         return -1 ;
     }
     if( nLenDst == 0 )
     {
-        n_log( LOG_ERR , "nLenDst (%d) <= 0" , nLenDst );
+        n_log( LOG_ERR, "nLenDst (%d) <= 0", nLenDst );
         return -1 ;
     }
 
@@ -65,12 +65,12 @@ int CompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *abD
     nErr= deflateInit( &zInfo, Z_DEFAULT_COMPRESSION ); // zlib function
     switch( nErr )
     {
-        case Z_OK:
-            // all is fine
-            break ;
-        default:
-            n_log( LOG_ERR , "%s on string %p size %d" , zError( nErr ) , abSrc , nLenSrc );
-            return -1 ;
+    case Z_OK:
+        // all is fine
+        break ;
+    default:
+        n_log( LOG_ERR, "%s on string %p size %d", zError( nErr ), abSrc, nLenSrc );
+        return -1 ;
     }
     nErr= deflate( &zInfo, Z_FINISH );              // zlib function
     if ( nErr == Z_STREAM_END )
@@ -79,7 +79,7 @@ int CompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *abD
     }
     else
     {
-        n_log( LOG_ERR , "%s on string %p size %d" , zError( nErr ) , abSrc , nLenSrc );
+        n_log( LOG_ERR, "%s on string %p size %d", zError( nErr ), abSrc, nLenSrc );
     }
     deflateEnd( &zInfo );    // zlib function
     return( nRet );
@@ -97,17 +97,17 @@ int CompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *abD
  */
 int UncompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *abDst, unsigned int nLenDst )
 {
-    __n_assert( abSrc , return -1 );
-    __n_assert( abDst , return -1 );
+    __n_assert( abSrc, return -1 );
+    __n_assert( abDst, return -1 );
 
     if( nLenSrc == 0 )
     {
-        n_log( LOG_ERR , "nLenSrc (%d) <= 0" , nLenSrc );
+        n_log( LOG_ERR, "nLenSrc (%d) <= 0", nLenSrc );
         return -1 ;
     }
     if( nLenDst == 0 )
     {
-        n_log( LOG_ERR , "nLenDst (%d) <= 0" , nLenDst );
+        n_log( LOG_ERR, "nLenDst (%d) <= 0", nLenDst );
         return -1 ;
     }
 
@@ -121,12 +121,12 @@ int UncompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *a
     nErr= inflateInit( &zInfo );               // zlib function
     switch( nErr )
     {
-        case Z_OK:
-            // all is fine
-            break ;
-        default:
-            n_log( LOG_ERR , "%s on string %p size %d" , zError( nErr ) , abSrc , nLenSrc );
-            return -1 ;
+    case Z_OK:
+        // all is fine
+        break ;
+    default:
+        n_log( LOG_ERR, "%s on string %p size %d", zError( nErr ), abSrc, nLenSrc );
+        return -1 ;
     }
     nErr= inflate( &zInfo, Z_FINISH );     // zlib function
     if( nErr == Z_STREAM_END )
@@ -135,7 +135,7 @@ int UncompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *a
     }
     else
     {
-         n_log( LOG_ERR , "%s on string %p size %d" , zError( nErr ) , abSrc , nLenSrc );
+        n_log( LOG_ERR, "%s on string %p size %d", zError( nErr ), abSrc, nLenSrc );
     }
     inflateEnd( &zInfo );   // zlib function
     return( nRet ); // -1 or len of output
@@ -149,17 +149,17 @@ int UncompressData( unsigned char *abSrc, unsigned int nLenSrc, unsigned char *a
  */
 N_STR *zip_nstr( N_STR *src )
 {
-    __n_assert( src , return NULL );
-    __n_assert( src -> data , return NULL );
-    
+    __n_assert( src, return NULL );
+    __n_assert( src -> data, return NULL );
+
     if( src -> length <= 0 )
     {
-        n_log( LOG_ERR , "length of src (%d) <= 0" , src -> length );
+        n_log( LOG_ERR, "length of src (%d) <= 0", src -> length );
         return NULL ;
     }
     if( src -> written <= 0 )
     {
-        n_log( LOG_ERR , "written of src (%d) <= 0" , src -> written );
+        n_log( LOG_ERR, "written of src (%d) <= 0", src -> written );
         return NULL ;
     }
 
@@ -168,8 +168,8 @@ N_STR *zip_nstr( N_STR *src )
 
     N_STR *zipped = new_nstr( 4 + zip_max_size );
 
-    __n_assert( zipped , return NULL );
-    __n_assert( zipped -> data , return NULL );
+    __n_assert( zipped, return NULL );
+    __n_assert( zipped -> data, return NULL );
 
     /* copying size */
     int32_t src_length = htonl( src -> length );
@@ -181,7 +181,7 @@ N_STR *zip_nstr( N_STR *src )
     if( compressed_size == -1 )
     {
         free_nstr( &zipped );
-        n_log( LOG_ERR , "unable to zip string %p  %d/%d bytes" , src -> data , src -> written , src -> length );
+        n_log( LOG_ERR, "unable to zip string %p  %d/%d bytes", src -> data, src -> written, src -> length );
         return NULL ;
     }
     zipped -> written = 4 + compressed_size ;
@@ -198,17 +198,17 @@ N_STR *zip_nstr( N_STR *src )
  */
 N_STR *unzip_nstr( N_STR *src )
 {
-    __n_assert( src , return NULL );
-    __n_assert( src -> data , return NULL );
+    __n_assert( src, return NULL );
+    __n_assert( src -> data, return NULL );
 
     if( src -> length <= 0 )
     {
-        n_log( LOG_ERR , "length of src (%d) <= 0" , src -> length );
+        n_log( LOG_ERR, "length of src (%d) <= 0", src -> length );
         return NULL ;
     }
     if( src -> written <= 0 )
     {
-        n_log( LOG_ERR , "written of src (%d) <= 0" , src -> written );
+        n_log( LOG_ERR, "written of src (%d) <= 0", src -> written );
         return NULL ;
     }
 
@@ -217,19 +217,19 @@ N_STR *unzip_nstr( N_STR *src )
     original_size = ntohl( original_size );
     if( original_size <= 0 )
     {
-        n_log( LOG_ERR , "original size (%d) <= 0" , original_size );
+        n_log( LOG_ERR, "original size (%d) <= 0", original_size );
         return NULL ;
     }
     /* storage for original string size + zipped string  + padding */
     N_STR *unzipped = new_nstr( original_size );
-    __n_assert( unzipped , return NULL );
-    __n_assert( unzipped -> data , return NULL );
+    __n_assert( unzipped, return NULL );
+    __n_assert( unzipped -> data, return NULL );
 
     /* copying size */
     unzipped -> written = UncompressData( ((unsigned char *)src -> data) + 4, src -> written, (unsigned char *)unzipped -> data, original_size );
     if( unzipped -> written == -1 )
     {
-        n_log( LOG_ERR , "unable to unzip string %p  %d/%d bytes" , unzipped -> data , unzipped -> written , unzipped -> length );
+        n_log( LOG_ERR, "unable to unzip string %p  %d/%d bytes", unzipped -> data, unzipped -> written, unzipped -> length );
         free_nstr( &unzipped );
         return NULL ;
     }

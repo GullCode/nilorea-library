@@ -78,7 +78,7 @@ int manage_peers( HASH_TABLE *peer_table, int delta_t )
     return TRUE ;
 }
 
-int draw_peers( HASH_TABLE *peer_table , ALLEGRO_FONT *font , ALLEGRO_COLOR color )
+int draw_peers( HASH_TABLE *peer_table, ALLEGRO_FONT *font, ALLEGRO_COLOR color )
 {
     ht_foreach( node, peer_table )
     {
@@ -87,8 +87,8 @@ int draw_peers( HASH_TABLE *peer_table , ALLEGRO_FONT *font , ALLEGRO_COLOR colo
         al_draw_line( peer -> position[ 0 ] - 5, peer -> position[ 1 ], peer -> position[ 0 ] + 5, peer -> position[ 1 ], al_map_rgb( 255, 0, 0 ), 1 );
         al_draw_line( peer -> position[ 0 ], peer -> position[ 1 ] + 5, peer -> position[ 0 ], peer -> position[ 1 ] - 5, al_map_rgb( 255, 0, 0 ), 1 );
         N_STR *textout = NULL ;
-        nstrprintf( textout , "id: %d" , peer -> id );
-        al_draw_text( font , color , peer -> position[ 0 ] + 10 , peer -> position[ 1 ] , ALLEGRO_ALIGN_LEFT , _nstr( textout) );
+        nstrprintf( textout, "id: %d", peer -> id );
+        al_draw_text( font, color, peer -> position[ 0 ] + 10, peer -> position[ 1 ], ALLEGRO_ALIGN_LEFT, _nstr( textout) );
         free_nstr( &textout );
     }
     return TRUE ;
@@ -234,7 +234,7 @@ int key[ 7 ] = {false,false,false,false,false,false,false};
 /* start */
 int main( int argc, char *argv[] )
 {
-    int		DONE = 0, QUIT_ASKED = 0 ,                     /* Flag to check if we are always running */
+    int		DONE = 0, QUIT_ASKED = 0,                      /* Flag to check if we are always running */
             getoptret = 0,				  /* launch parameter check */
             log_level = LOG_ERR ;			 /* default LOG_LEVEL */
 
@@ -413,7 +413,7 @@ int main( int argc, char *argv[] )
             }
             if( type == NETMSG_IDENT_REPLY_NOK )
             {
-                n_log( LOG_ERR , "Login refused !!!" );
+                n_log( LOG_ERR, "Login refused !!!" );
                 goto exit_client ;
             }
         }
@@ -502,11 +502,11 @@ int main( int argc, char *argv[] )
         else if( ev.keyboard.keycode == ALLEGRO_KEY_ENTER )
         {
             N_STR *txtmsg = new_nstr( 1024 );
-			al_ustr_trim_ws( chat_line ) ;
-			al_ustr_to_buffer(  chat_line , txtmsg -> data , txtmsg -> length );
+            al_ustr_trim_ws( chat_line ) ;
+            al_ustr_to_buffer(  chat_line, txtmsg -> data, txtmsg -> length );
 
-            N_STR *netmsg = netmsg_make_string_msg( netw -> link . sock , -1 , name , txtmsg , txtmsg , 1 );
-            netw_add_msg( netw , netmsg );
+            N_STR *netmsg = netmsg_make_string_msg( netw -> link . sock, -1, name, txtmsg, txtmsg, 1 );
+            netw_add_msg( netw, netmsg );
             free_nstr( &txtmsg );
 
         }
@@ -635,7 +635,7 @@ int main( int argc, char *argv[] )
                     int id = -1, color = -1 ;
                     N_STR *name = NULL, *txt = NULL, *chan = NULL ;
                     netw_get_string( netmsg, &id, &name, &chan, &txt, &color );
-                    n_log( LOG_INFO, "Received chat from %s:%s:%s (id: %d , color:%d)", name, chan, txt, id , color );
+                    n_log( LOG_INFO, "Received chat from %s:%s:%s (id: %d , color:%d)", name, chan, txt, id, color );
                 }
                 break;
                 case( NETMSG_PING_REQUEST ):
@@ -665,7 +665,7 @@ int main( int argc, char *argv[] )
                 if( QUIT_ASKED != 1 )
                 {
                     QUIT_ASKED = 1 ;
-                    n_log( LOG_INFO , "Asking server to quit..." );
+                    n_log( LOG_INFO, "Asking server to quit..." );
                     netw_send_quit( netw );
                 }
             }
@@ -691,7 +691,7 @@ int main( int argc, char *argv[] )
             /*al_draw_line( mx - 5, my, mx + 5, my, al_map_rgb( 255, 0, 0 ), 1 );
             al_draw_line( mx, my + 5, mx, my - 5, al_map_rgb( 255, 0, 0 ), 1 );*/
 
-            draw_peers( peer_table , font , white_color );
+            draw_peers( peer_table, font, white_color );
 
             al_draw_ustr( font, white_color, 0, HEIGHT - 20, ALLEGRO_ALIGN_LEFT, chat_line );
 

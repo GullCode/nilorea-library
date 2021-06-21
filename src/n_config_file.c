@@ -499,7 +499,7 @@ char *get_config_section_value( CONFIG_FILE *cfg_file, char *section_name, int s
  */
 int destroy_config_file( CONFIG_FILE **cfg_file )
 {
-    __n_assert( cfg_file&&(*cfg_file) , return FALSE );
+    __n_assert( cfg_file&&(*cfg_file), return FALSE );
 
     Free( (*cfg_file) -> filename );
 

@@ -154,18 +154,13 @@ int n_popen( char *cmd, int read_buf_size, void **nstr_output, int *ret )
 {
     __n_assert( cmd, return FALSE );
 
-    N_STR **output_pointer = (N_STR **)(nstr_output);
+    N_STR *output_pointer = new_nstr( read_buf_size + 1 );
 
     FILE *fp = NULL ;
     int status = 0 ;
     char read_buf[ read_buf_size ] ;
 
-    if( !(*output_pointer) )
-    {
-        (*output_pointer) = new_nstr( read_buf_size );
-    }
-
-    fp = popen( cmd, "r" );
+    fp = popen( cmd, "w" );
     int err = errno ;
     if (fp == NULL)
     {
@@ -181,7 +176,7 @@ int n_popen( char *cmd, int read_buf_size, void **nstr_output, int *ret )
         {
             read_buf[ length - 1 ] = '\0' ;
         }
-        nstrprintf_cat( (*output_pointer), "%s", read_buf );
+        nstrprintf_cat( output_pointer, "%s", read_buf );
     }
     status = pclose( fp );
     err = errno ;
@@ -196,6 +191,7 @@ int n_popen( char *cmd, int read_buf_size, void **nstr_output, int *ret )
         return FALSE ;
     }
     (*ret) =  WEXITSTATUS( status );
+    (*nstr_output) = output_pointer ;
     return TRUE ;
 } /* n_popen( ... ) */
 

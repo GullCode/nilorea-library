@@ -131,20 +131,20 @@ void MurmurHash3_x86_32 ( const void * key, int len, uint32_t seed, void * out )
 
     switch(len & 3)
     {
-        case 3:
-            k1 ^= tail[2] << 16;
-            FALL_THROUGH ;
-        case 2:
-            k1 ^= tail[1] << 8;
-            FALL_THROUGH ;
-        case 1:
-            k1 ^= tail[0];
-            k1 *= c1;
-            k1 = ROTL32(k1,15);
-            k1 *= c2;
-            h1 ^= k1;
-        default:
-            break ;
+    case 3:
+        k1 ^= tail[2] << 16;
+        FALL_THROUGH ;
+    case 2:
+        k1 ^= tail[1] << 8;
+        FALL_THROUGH ;
+    case 1:
+        k1 ^= tail[0];
+        k1 *= c1;
+        k1 = ROTL32(k1,15);
+        k1 *= c2;
+        h1 ^= k1;
+    default:
+        break ;
     };
 
     /* finalization */
@@ -236,68 +236,68 @@ void MurmurHash3_x86_128 ( const void * key, const int len, uint32_t seed, void 
 
     switch(len & 15)
     {
-        case 15:
-            k4 ^= tail[14] << 16;
-            FALL_THROUGH ;
-        case 14:
-            k4 ^= tail[13] << 8;
-            FALL_THROUGH ;
-        case 13:
-            k4 ^= tail[12] << 0;
-            k4 *= c4;
-            k4  = ROTL32(k4,18);
-            k4 *= c1;
-            h4 ^= k4;
-            FALL_THROUGH ;
-        case 12:
-            k3 ^= tail[11] << 24;
-            FALL_THROUGH ;
-        case 11:
-            k3 ^= tail[10] << 16;
-            FALL_THROUGH ;
-        case 10:
-            k3 ^= tail[ 9] << 8;
-            FALL_THROUGH ;
-        case  9:
-            k3 ^= tail[ 8] << 0;
-            k3 *= c3;
-            k3  = ROTL32(k3,17);
-            k3 *= c4;
-            h3 ^= k3;
-            FALL_THROUGH ;
-        case  8:
-            k2 ^= tail[ 7] << 24;
-            FALL_THROUGH ;
-        case  7:
-            k2 ^= tail[ 6] << 16;
-            FALL_THROUGH ;
-        case  6:
-            k2 ^= tail[ 5] << 8;
-            FALL_THROUGH ;
-        case  5:
-            k2 ^= tail[ 4] << 0;
-            k2 *= c2;
-            k2  = ROTL32(k2,16);
-            k2 *= c3;
-            h2 ^= k2;
-            FALL_THROUGH ;
-        case  4:
-            k1 ^= tail[ 3] << 24;
-            FALL_THROUGH ;
-        case  3:
-            k1 ^= tail[ 2] << 16;
-            FALL_THROUGH ;
-        case  2:
-            k1 ^= tail[ 1] << 8;
-            FALL_THROUGH ;
-        case  1:
-            k1 ^= tail[ 0] << 0;
-            k1 *= c1;
-            k1  = ROTL32(k1,15);
-            k1 *= c2;
-            h1 ^= k1;
-        default:
-            break ;
+    case 15:
+        k4 ^= tail[14] << 16;
+        FALL_THROUGH ;
+    case 14:
+        k4 ^= tail[13] << 8;
+        FALL_THROUGH ;
+    case 13:
+        k4 ^= tail[12] << 0;
+        k4 *= c4;
+        k4  = ROTL32(k4,18);
+        k4 *= c1;
+        h4 ^= k4;
+        FALL_THROUGH ;
+    case 12:
+        k3 ^= tail[11] << 24;
+        FALL_THROUGH ;
+    case 11:
+        k3 ^= tail[10] << 16;
+        FALL_THROUGH ;
+    case 10:
+        k3 ^= tail[ 9] << 8;
+        FALL_THROUGH ;
+    case  9:
+        k3 ^= tail[ 8] << 0;
+        k3 *= c3;
+        k3  = ROTL32(k3,17);
+        k3 *= c4;
+        h3 ^= k3;
+        FALL_THROUGH ;
+    case  8:
+        k2 ^= tail[ 7] << 24;
+        FALL_THROUGH ;
+    case  7:
+        k2 ^= tail[ 6] << 16;
+        FALL_THROUGH ;
+    case  6:
+        k2 ^= tail[ 5] << 8;
+        FALL_THROUGH ;
+    case  5:
+        k2 ^= tail[ 4] << 0;
+        k2 *= c2;
+        k2  = ROTL32(k2,16);
+        k2 *= c3;
+        h2 ^= k2;
+        FALL_THROUGH ;
+    case  4:
+        k1 ^= tail[ 3] << 24;
+        FALL_THROUGH ;
+    case  3:
+        k1 ^= tail[ 2] << 16;
+        FALL_THROUGH ;
+    case  2:
+        k1 ^= tail[ 1] << 8;
+        FALL_THROUGH ;
+    case  1:
+        k1 ^= tail[ 0] << 0;
+        k1 *= c1;
+        k1  = ROTL32(k1,15);
+        k1 *= c2;
+        h1 ^= k1;
+    default:
+        break ;
     };
     /* finalization */
     h1 ^= len;
@@ -401,9 +401,9 @@ HASH_TABLE *new_ht( unsigned long int size )
     table -> size = size ;
     table -> nb_keys = 0 ;
     errno = 0 ;
-    Malloc( table -> hash_table , LIST * , size );
+    Malloc( table -> hash_table, LIST *, size );
     // table -> hash_table = (LIST **)calloc( size, sizeof( LIST *) );
-    __n_assert( table -> hash_table, n_log( LOG_ERR, "Can't allocate table -> hash_table with size %d !" , size ); Free( table ); return NULL );
+    __n_assert( table -> hash_table, n_log( LOG_ERR, "Can't allocate table -> hash_table with size %d !", size ); Free( table ); return NULL );
 
     unsigned long int it = 0 ;
     for(  it = 0 ; it < size ; it ++ )
@@ -412,14 +412,14 @@ HASH_TABLE *new_ht( unsigned long int size )
         // if no valid table then unroll previsouly created slots
         if( !table -> hash_table[ it ] )
         {
-            n_log( LOG_ERR, "Can't allocate table -> hash_table[ %d ] !" , it );
+            n_log( LOG_ERR, "Can't allocate table -> hash_table[ %d ] !", it );
             unsigned long int it_delete = 0 ;
             for( it_delete = 0 ; it_delete < it ; it_delete ++ )
             {
                 list_destroy( &table -> hash_table[ it_delete ] );
             }
             Free( table -> hash_table );
-            Free( table ); 
+            Free( table );
             return NULL ;
         }
     }
@@ -1081,7 +1081,7 @@ int empty_ht( HASH_TABLE *table )
  */
 int destroy_ht( HASH_TABLE **table )
 {
-    __n_assert( table&&(*table) , n_log( LOG_ERR, "Can't destroy table: already NULL" ); return FALSE );
+    __n_assert( table&&(*table), n_log( LOG_ERR, "Can't destroy table: already NULL" ); return FALSE );
 
     if( (*table )-> hash_table )
     {

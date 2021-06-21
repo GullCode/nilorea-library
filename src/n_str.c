@@ -165,8 +165,8 @@ char *trim(char *s)
  */
 char *nfgets( char *buffer, NSTRBYTE size, FILE *stream )
 {
-    __n_assert( buffer , return NULL );
-    __n_assert( stream , return NULL );
+    __n_assert( buffer, return NULL );
+    __n_assert( stream, return NULL );
 
     NSTRBYTE it = 0  ;
 
@@ -177,7 +177,7 @@ char *nfgets( char *buffer, NSTRBYTE size, FILE *stream )
 
     if( it == ( size - 1 ) )
     {
-        n_log( LOG_DEBUG , "buffer %p size %d fully filled by fgets on stream %p" , buffer , size , stream );
+        n_log( LOG_DEBUG, "buffer %p size %d fully filled by fgets on stream %p", buffer, size, stream );
     }
 
     return buffer ;
@@ -221,7 +221,8 @@ N_STR *new_nstr( NSTRBYTE size )
     }
     else
     {
-        Malloc( str -> data , char , size );
+        n_log( LOG_DEBUG , "size: %d" , size );
+	Malloc( str -> data, char, size );
         __n_assert( str -> data, Free(str) ; return NULL );
         str -> length = size  ;
     }
@@ -374,7 +375,7 @@ int nstr_to_fd( N_STR *str, FILE *out, int lock )
     size_t written_to_file = 0 ;
     if( (written_to_file = fwrite( str -> data, sizeof( char ), str -> written, out ) ) !=  (size_t)str -> written )
     {
-        n_log( LOG_ERR, "Couldn't write file, fwrite %d of %d octets" , written_to_file , str -> written  );
+        n_log( LOG_ERR, "Couldn't write file, fwrite %d of %d octets", written_to_file, str -> written  );
         ret = FALSE ;
     }
     if( ferror( out ) )
@@ -943,7 +944,7 @@ int strcpy_u( char *from, char *to, NSTRBYTE to_size, char split, NSTRBYTE *it )
 
     __n_assert( from, return FALSE );
     __n_assert( to, return FALSE );
-    __n_assert( it , return FALSE );
+    __n_assert( it, return FALSE );
 
     while( _it < to_size && from[ (*it) ] != '\0' && from[ (*it) ] != split  )
     {
@@ -952,14 +953,14 @@ int strcpy_u( char *from, char *to, NSTRBYTE to_size, char split, NSTRBYTE *it )
         _it = _it +1 ;
     }
 
-    if( _it == to_size ) 
+    if( _it == to_size )
     {
         _it -- ;
         to[ _it ] = '\0' ;
         n_log(  LOG_DEBUG, "strcpy_u: not enough space to write %d octet to dest (%d max) , %s: %d \n", _it, to_size, __FILE__, __LINE__ );
         return FALSE;
     }
-    
+
     to[ _it ] = '\0' ;
 
     if( from[ (*it) ] != split )
@@ -1118,7 +1119,7 @@ int nstrcat_ex( N_STR *dest, void *src, NSTRBYTE size, NSTRBYTE blk_size, int re
 
     if( dest )
     {
-        if( ( dest -> written + size + 1 ) > dest -> length  && resize_flag == 0 )
+        if( ( dest -> written + size ) >= dest -> length  && resize_flag == 0 )
         {
             n_log( LOG_ERR, "%p to %p: not enough space. Resize forbidden. %lld needed, %lld available", dest, src,  dest -> written + size + 1, dest -> length );
             return FALSE ;
@@ -1130,7 +1131,7 @@ int nstrcat_ex( N_STR *dest, void *src, NSTRBYTE size, NSTRBYTE blk_size, int re
         return FALSE ;
     }
 
-    while( ( dest -> written + size + 1 ) > dest -> length )
+    while( ( dest -> written + size ) >= dest -> length )
     {
         dest -> length += blk_size ;
         realloc_flag = 1 ;
@@ -1138,14 +1139,14 @@ int nstrcat_ex( N_STR *dest, void *src, NSTRBYTE size, NSTRBYTE blk_size, int re
 
     if( realloc_flag == 1 )
     {
-        Reallocz( dest -> data, char, dest -> written , dest -> length );
+        Reallocz( dest -> data, char, dest -> written, dest -> length );
         __n_assert( dest -> data, Free( dest ); return FALSE );
     }
 
     ptr = dest -> data + dest -> written ;
     memcpy( ptr, src, size );
     dest -> written += size ;
-    
+
     dest -> data[ dest -> written ] = '\0' ;
 
     return TRUE ;
@@ -1161,7 +1162,7 @@ int nstrcat_ex( N_STR *dest, void *src, NSTRBYTE size, NSTRBYTE blk_size, int re
  */
 int nstrcat( N_STR *dst, N_STR *src )
 {
-    return nstrcat_ex( dst, src -> data, src -> written, src -> written + 64 , 1 );
+    return nstrcat_ex( dst, src -> data, src -> written, src -> written + 64, 1 );
 } /* nstrcat( ... ) */
 
 
@@ -1184,7 +1185,7 @@ int nstrcat_bytes_ex( N_STR *dest, void *data, NSTRBYTE size )
         return FALSE ;
     }
 
-    return nstrcat_ex( dest, data, size, size + 64 , 1 );
+    return nstrcat_ex( dest, data, size, size + 64, 1 );
 } /* nstrcat_bytes_ex( ... )*/
 
 
@@ -1222,7 +1223,7 @@ int nstrcat_bytes( N_STR *dest, void *data )
  *\param additional_padding In case the destination is reallocated, number of additional bytes that will be added (provisionning)
  *\return TRUE on success or FALSE on a realloc error
  */
-int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src , NSTRBYTE src_size , NSTRBYTE additional_padding )
+int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src, NSTRBYTE src_size, NSTRBYTE additional_padding )
 {
     char *ptr = NULL ;
     NSTRBYTE needed_size = (*written) + src_size + 1 ;
@@ -1230,10 +1231,10 @@ int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src 
     // realloc if needed , also if destination is not allocated
     if( needed_size > (*size) || !(*dest) )
     {
-        n_log( LOG_DEBUG , "dest will grow from %d to %d" , (*size) , needed_size + additional_padding );
+        n_log( LOG_DEBUG, "dest will grow from %d to %d", (*size), needed_size + additional_padding );
 
         // +1 for the \0 , + additional padding for eventual futur concatenation space
-        Reallocz( (*dest) , char , (*size) , needed_size + additional_padding ); 
+        Reallocz( (*dest), char, (*size), needed_size + additional_padding );
         (*size) = needed_size + additional_padding ;
         if( !(*dest) )
         {
@@ -1243,7 +1244,7 @@ int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src 
     }
 
     ptr = (*dest) + (*written) ;
-    memcpy( ptr , src , src_size );
+    memcpy( ptr, src, src_size );
     (*written) += src_size ;
 
     (*dest)[ (*written) ] = '\0' ;
@@ -1263,7 +1264,7 @@ int write_and_fit_ex( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src 
  */
 int write_and_fit( char **dest, NSTRBYTE *size, NSTRBYTE *written, char *src )
 {
-    return write_and_fit_ex( dest , size , written , src , strlen( src ) , 512 );
+    return write_and_fit_ex( dest, size, written, src, strlen( src ), 512 );
 } /* write_and_fit( ...) */
 
 
@@ -1383,45 +1384,45 @@ int wildmat(register const char *text, register const char *p)
             return WILDMAT_ABORT;
         switch (*p)
         {
-            case '\\':
-                /* Literal match with following character. */
+        case '\\':
+            /* Literal match with following character. */
+            p++;
+        /* FALLTHROUGH */
+        default:
+            if (*text != *p)
+                return FALSE;
+            continue;
+        case '?':
+            /* Match anything. */
+            continue;
+        case '*':
+            while (*++p == '*')
+                /* Consecutive stars act just like one. */
+                continue;
+            if (*p == '\0')
+                /* Trailing star matches everything. */
+                return TRUE;
+            while (*text)
+                if ((matched = wildmat(text++, p)) != FALSE)
+                    return matched;
+            return WILDMAT_ABORT;
+        case '[':
+            reverse = p[1] == WILDMAT_NEGATE_CLASS ? TRUE : FALSE;
+            if (reverse)
+                /* Inverted character class. */
                 p++;
-                /* FALLTHROUGH */
-            default:
-                if (*text != *p)
-                    return FALSE;
-                continue;
-            case '?':
-                /* Match anything. */
-                continue;
-            case '*':
-                while (*++p == '*')
-                    /* Consecutive stars act just like one. */
-                    continue;
-                if (*p == '\0')
-                    /* Trailing star matches everything. */
-                    return TRUE;
-                while (*text)
-                    if ((matched = wildmat(text++, p)) != FALSE)
-                        return matched;
-                return WILDMAT_ABORT;
-            case '[':
-                reverse = p[1] == WILDMAT_NEGATE_CLASS ? TRUE : FALSE;
-                if (reverse)
-                    /* Inverted character class. */
-                    p++;
-                matched = FALSE;
-                if (p[1] == ']' || p[1] == '-')
-                    if (*++p == *text)
-                        matched = TRUE;
-                for (last = *p; *++p && *p != ']'; last = *p)
-                    /* This next line requires a good C compiler. */
-                    if (*p == '-' && p[1] != ']'
-                            ? *text <= *++p && *text >= last : *text == *p)
-                        matched = TRUE;
-                if (matched == reverse)
-                    return FALSE;
-                continue;
+            matched = FALSE;
+            if (p[1] == ']' || p[1] == '-')
+                if (*++p == *text)
+                    matched = TRUE;
+            for (last = *p; *++p && *p != ']'; last = *p)
+                /* This next line requires a good C compiler. */
+                if (*p == '-' && p[1] != ']'
+                        ? *text <= *++p && *text >= last : *text == *p)
+                    matched = TRUE;
+            if (matched == reverse)
+                return FALSE;
+            continue;
         }
     }
 #ifdef WILDMAT_MATCH_TAR_PATTERN
@@ -1451,44 +1452,44 @@ int wildmatcase(register const char *text, register const char *p)
             return WILDMAT_ABORT;
         switch (*p)
         {
-            case '\\':
-                /* Literal match with following character. */
+        case '\\':
+            /* Literal match with following character. */
+            p++;
+        /* FALLTHROUGH */
+        default:
+            if (toupper(*text) != toupper(*p))
+                return FALSE;
+            continue;
+        case '?':
+            /* Match anything. */
+            continue;
+        case '*':
+            while (*++p == '*')
+                /* Consecutive stars act just like one. */
+                continue;
+            if (*p == '\0')
+                /* Trailing star matches everything. */
+                return TRUE;
+            while (*text)
+                if ((matched = wildmatcase(text++, p)) != FALSE)
+                    return matched;
+            return WILDMAT_ABORT;
+        case '[':
+            reverse = p[1] == WILDMAT_NEGATE_CLASS ? TRUE : FALSE;
+            if (reverse)
+                /* Inverted character class. */
                 p++;
-                /* FALLTHROUGH */
-            default:
-                if (toupper(*text) != toupper(*p))
-                    return FALSE;
-                continue;
-            case '?':
-                /* Match anything. */
-                continue;
-            case '*':
-                while (*++p == '*')
-                    /* Consecutive stars act just like one. */
-                    continue;
-                if (*p == '\0')
-                    /* Trailing star matches everything. */
-                    return TRUE;
-                while (*text)
-                    if ((matched = wildmatcase(text++, p)) != FALSE)
-                        return matched;
-                return WILDMAT_ABORT;
-            case '[':
-                reverse = p[1] == WILDMAT_NEGATE_CLASS ? TRUE : FALSE;
-                if (reverse)
-                    /* Inverted character class. */
-                    p++;
-                matched = FALSE;
-                if (p[1] == ']' || p[1] == '-')
-                    if (toupper(*++p) == toupper(*text))
-                        matched = TRUE;
-                for (last = toupper(*p); *++p && *p != ']'; last = toupper(*p))
-                    if (*p == '-' && p[1] != ']'
-                            ? toupper(*text) <= toupper(*++p) && toupper(*text) >= last : toupper(*text) == toupper(*p))
-                        matched = TRUE;
-                if (matched == reverse)
-                    return FALSE;
-                continue;
+            matched = FALSE;
+            if (p[1] == ']' || p[1] == '-')
+                if (toupper(*++p) == toupper(*text))
+                    matched = TRUE;
+            for (last = toupper(*p); *++p && *p != ']'; last = toupper(*p))
+                if (*p == '-' && p[1] != ']'
+                        ? toupper(*text) <= toupper(*++p) && toupper(*text) >= last : toupper(*text) == toupper(*p))
+                    matched = TRUE;
+            if (matched == reverse)
+                return FALSE;
+            continue;
         }
     }
 #ifdef WILDMAT_MATCH_TAR_PATTERN
@@ -1525,7 +1526,7 @@ char *str_replace ( const char *string, const char *substr, const char *replacem
     while ( (tok = strstr ( head, substr )))
     {
         oldstr = newstr;
-        Malloc( newstr , char , strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) + 8 );
+        Malloc( newstr, char, strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) + 8 );
         /*failed to alloc mem, free old string and return NULL */
         if ( newstr == NULL )
         {

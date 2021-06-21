@@ -115,9 +115,7 @@ void process_args( int argc, char **argv )
 
 int main(int argc, char **argv)
 {
-#ifdef DEBUG_MEM
-    init_debug_mem();
-#endif // DEBUG_MEM
+//    init_debug_mem();
 
     /* processing args and set log_level */
     process_args( argc, argv );
@@ -193,9 +191,9 @@ error:
     n_log( LOG_INFO, "wait for nb sys call" );
     wait( &pid );
     n_log( LOG_INFO, "done" );
-    n_daemonize();
 #endif
     n_abort( "Testing abort before exit" );
     n_log( LOG_INFO, "abort done" );
+
     exit( 0 );
 }

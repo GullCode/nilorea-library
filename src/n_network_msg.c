@@ -582,10 +582,26 @@ N_STR *netmsg_make_ping( int type, int id_from, int id_to, int time )
 
     __n_assert( msg, return NULL );
 
-    if( add_int_to_msg( msg, type )    == FALSE ){ delete_msg( &msg ); return NULL; }
-    if( add_int_to_msg( msg, id_from ) == FALSE ){ delete_msg( &msg ); return NULL; }
-    if( add_int_to_msg( msg, id_to )   == FALSE ){ delete_msg( &msg ); return NULL; }
-    if( add_int_to_msg( msg, time )    == FALSE ){ delete_msg( &msg ); return NULL; }
+    if( add_int_to_msg( msg, type )    == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
+    if( add_int_to_msg( msg, id_from ) == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
+    if( add_int_to_msg( msg, id_to )   == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
+    if( add_int_to_msg( msg, time )    == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
 
     tmpstr = make_str_from_msg( msg );
     delete_msg( &msg );
@@ -611,11 +627,27 @@ N_STR *netmsg_make_ident( int type, int id, N_STR *name, N_STR *passwd  )
     create_msg( &msg );
     __n_assert( msg, return FALSE );
 
-    if( add_int_to_msg( msg, type ) == FALSE ){ delete_msg( &msg ); return NULL; }
-    if( add_int_to_msg( msg, id )   == FALSE ){ delete_msg( &msg ); return NULL; }
+    if( add_int_to_msg( msg, type ) == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
+    if( add_int_to_msg( msg, id )   == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
 
-    if( add_nstrdup_to_msg( msg, name )   == FALSE ){ delete_msg( &msg ); return NULL; }
-    if( add_nstrdup_to_msg( msg, passwd ) == FALSE ){ delete_msg( &msg ); return NULL; }
+    if( add_nstrdup_to_msg( msg, name )   == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
+    if( add_nstrdup_to_msg( msg, passwd ) == FALSE )
+    {
+        delete_msg( &msg );
+        return NULL;
+    }
 
     tmpstr = make_str_from_msg( msg );
     delete_msg( &msg );
@@ -624,7 +656,7 @@ N_STR *netmsg_make_ident( int type, int id, N_STR *name, N_STR *passwd  )
 } /* netmsg_make_ident() */
 
 
-N_STR *netmsg_make_position_msg( int id , double X , double Y , double vx , double vy , double acc_x , double acc_y , int time_stamp )
+N_STR *netmsg_make_position_msg( int id, double X, double Y, double vx, double vy, double acc_x, double acc_y, int time_stamp )
 {
 
     NETW_MSG *msg = NULL ;
@@ -905,9 +937,9 @@ int netw_get_ping( N_STR *msg, int *type, int *from, int *to, int *time )
  */
 int netw_get_quit( N_STR *msg )
 {
-    __n_assert( msg , return FALSE );
+    __n_assert( msg, return FALSE );
 
-   NETW_MSG *netmsg = NULL ;
+    NETW_MSG *netmsg = NULL ;
     netmsg = make_msg_from_str( msg );
     __n_assert( netmsg, return FALSE );
 

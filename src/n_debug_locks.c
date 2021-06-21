@@ -55,7 +55,7 @@ LIST *n_mutex_list = NULL ;
 int n_pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *mutexattr)
 {
 
-    pthread_mutex_init( mutex , mutexattr );
+    pthread_mutex_init( mutex, mutexattr );
 }
 
 int n_pthread_mutex_lock(pthread_mutex_t *mutex)

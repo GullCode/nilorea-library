@@ -40,36 +40,23 @@
 			</Target>
 		</Build>
 		<Unit filename=".gitignore" />
-		<Unit filename="CMakeLists.txt" />
 		<Unit filename="Doxyfile" />
 		<Unit filename="Makefile" />
-		<Unit filename="NiloreaCppCheck-cppcheck-build-dir/files.txt" />
-		<Unit filename="NiloreaCppCheck-cppcheck-build-dir/statistics.txt" />
 		<Unit filename="README.md" />
-		<Unit filename="build-number.txt" />
-		<Unit filename="cmake_build/CMakeCache.txt" />
-		<Unit filename="cmake_build/CMakeFiles/3.15.6/CompilerIdCXX/CMakeCXXCompilerId.cpp" />
-		<Unit filename="cmake_build/CMakeFiles/3.15.6/CompilerIdC/CMakeCCompilerId.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="cmake_build/CMakeFiles/TargetDirectories.txt" />
 		<Unit filename="examples/client.cfg" />
 		<Unit filename="examples/ex_common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_common_applog.txt" />
 		<Unit filename="examples/ex_configfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="examples/ex_configfile.cfg" />
-		<Unit filename="examples/ex_configfile_applog.txt" />
 		<Unit filename="examples/ex_debug_mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="examples/ex_exceptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_exceptions_applog.txt" />
 		<Unit filename="examples/ex_gui.cfg" />
 		<Unit filename="examples/ex_gui_netclient.c">
 			<Option compilerVar="CC" />
@@ -83,47 +70,33 @@
 		<Unit filename="examples/ex_hash.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_hash_applog.txt" />
 		<Unit filename="examples/ex_list.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_list_applog.txt" />
 		<Unit filename="examples/ex_log.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_log_applog.txt" />
 		<Unit filename="examples/ex_monolith.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_monolith_applog.txt" />
 		<Unit filename="examples/ex_network.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="examples/ex_network.h" />
-		<Unit filename="examples/ex_network_applog.txt" />
-		<Unit filename="examples/ex_network_debugmem.txt" />
-		<Unit filename="examples/ex_network_debugmem_server.txt" />
 		<Unit filename="examples/ex_nstr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_nstr_applog.txt" />
 		<Unit filename="examples/ex_pcre.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/ex_pcre_applog.txt" />
 		<Unit filename="examples/ex_signals.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="examples/ex_threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="examples/nilorea.h" />
 		<Unit filename="examples/serveur.cfg" />
-		<Unit filename="examples/sslexample.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="examples/valgrind-suppressions.cfg" />
-		<Unit filename="exclude-list.txt" />
 		<Unit filename="include/nilorea.h" />
 		<Unit filename="include/nilorea/n_3d.h" />
 		<Unit filename="include/nilorea/n_allegro5.h" />
@@ -133,21 +106,17 @@
 		<Unit filename="include/nilorea/n_debug_mem.h" />
 		<Unit filename="include/nilorea/n_debug_mem_h.h" />
 		<Unit filename="include/nilorea/n_exceptions.h" />
-		<Unit filename="include/nilorea/n_file.h" />
 		<Unit filename="include/nilorea/n_games.h" />
 		<Unit filename="include/nilorea/n_gfx.h" />
-		<Unit filename="include/nilorea/n_gui.h" />
 		<Unit filename="include/nilorea/n_hash.h" />
 		<Unit filename="include/nilorea/n_iso_engine.h" />
 		<Unit filename="include/nilorea/n_list.h" />
 		<Unit filename="include/nilorea/n_log.h" />
 		<Unit filename="include/nilorea/n_network.h" />
 		<Unit filename="include/nilorea/n_network_msg.h" />
-		<Unit filename="include/nilorea/n_neural_networks.h" />
 		<Unit filename="include/nilorea/n_nodup_log.h" />
 		<Unit filename="include/nilorea/n_particles.h" />
 		<Unit filename="include/nilorea/n_pcre.h" />
-		<Unit filename="include/nilorea/n_resources.h" />
 		<Unit filename="include/nilorea/n_signals.h" />
 		<Unit filename="include/nilorea/n_stack.h" />
 		<Unit filename="include/nilorea/n_str.h" />
@@ -172,22 +141,19 @@
 		<Unit filename="src/n_config_file.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/n_debug_locks.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/n_debug_mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/n_exceptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/n_file.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/n_games.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/n_gfx.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/n_gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/n_hash.c">
@@ -208,9 +174,6 @@
 		<Unit filename="src/n_network_msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/n_neural_networks.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/n_nodup_log.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -218,9 +181,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/n_pcre.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/n_resources.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/n_signals.c">
@@ -244,7 +204,6 @@
 		<Unit filename="src/n_zlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="version-number.txt" />
 		<Unit filename="version.h" />
 		<Extensions>
 			<DoxyBlocks>

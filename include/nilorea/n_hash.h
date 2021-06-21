@@ -100,8 +100,8 @@ typedef struct HASH_TABLE
 {
     /*! size of the hash table */
     unsigned long int size,
-        /*! total number of used keys in the table */
-        nb_keys ;
+             /*! total number of used keys in the table */
+             nb_keys ;
     /*! preallocated table */
     LIST **hash_table;
 } HASH_TABLE ;

@@ -13,10 +13,10 @@ extern "C"
 {
 #endif
 
-    /**\defgroup COMMONS COMMONS: generally used headers, defines, timers, allocators,...
-      \addtogroup COMMONS
-      @{
-      */
+/**\defgroup COMMONS COMMONS: generally used headers, defines, timers, allocators,...
+  \addtogroup COMMONS
+  @{
+  */
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -25,10 +25,10 @@ extern "C"
 #include <errno.h>
 #include <nilorea/n_log.h>
 
-    /*! feature test macro */
+/*! feature test macro */
 #define __EXTENSIONS__
 
-    /*! set __windows__ if true */
+/*! set __windows__ if true */
 #if defined( _WIN32 ) || defined( _WIN64 )
 #ifndef __windows__
 #define __windows__
@@ -73,7 +73,7 @@ extern "C"
 
 
 #ifndef BYTEORDER_ENDIAN
-    // Detect with GCC 4.6's macro.
+// Detect with GCC 4.6's macro.
 #if defined(__BYTE_ORDER__)
 #if (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
 #define BYTEORDER_ENDIAN BYTEORDER_LITTLE_ENDIAN
@@ -84,7 +84,7 @@ extern "C"
 #warning "Unknown machine byteorder endianness detected. User needs to define BYTEORDER_ENDIAN."
 #warning "Setting default to BYTEORDER_LITTLE_ENDIAN"
 #endif
-    // Detect with GLIBC's endian.h.
+// Detect with GLIBC's endian.h.
 #elif defined(__GLIBC__)
 #include <endian.h>
 #if (__BYTE_ORDER == __LITTLE_ENDIAN)
@@ -96,12 +96,12 @@ extern "C"
 #warning "Unknown machine byteorder endianness detected. User needs to define BYTEORDER_ENDIAN."
 #warning "Setting default to BYTEORDER_LITTLE_ENDIAN"
 #endif
-    // Detect with _LITTLE_ENDIAN and _BIG_ENDIAN macro.
+// Detect with _LITTLE_ENDIAN and _BIG_ENDIAN macro.
 #elif defined(_LITTLE_ENDIAN) && !defined(_BIG_ENDIAN)
 #define BYTEORDER_ENDIAN BYTEORDER_LITTLE_ENDIAN
 #elif defined(_BIG_ENDIAN) && !defined(_LITTLE_ENDIAN)
 #define BYTEORDER_ENDIAN BYTEORDER_BIG_ENDIAN
-    // Detect with architecture macros.
+// Detect with architecture macros.
 #elif defined(__sparc) || defined(__sparc__) || defined(_POWER) || defined(__powerpc__) || defined(__ppc__) || defined(__hpux) || defined(__hppa) || defined(_MIPSEB) || defined(_POWER) || defined(__s390__)
 #define BYTEORDER_ENDIAN BYTEORDER_BIG_ENDIAN
 #elif defined(__i386__) || defined(__alpha__) || defined(__ia64) || defined(__ia64__) || defined(_M_IX86) || defined(_M_IA64) || defined(_M_ALPHA) || defined(__amd64) || defined(__amd64__) || defined(_M_AMD64) || defined(__x86_64) || defined(__x86_64__) || defined(_M_X64) || defined(__bfin__)
@@ -116,18 +116,18 @@ extern "C"
 #endif
 
 #if defined( __windows__ )
-    /* typedefine for unsigned category for basic native types */
-    /*! shortcut for unsigned int*/
-    typedef unsigned int uint;
-    /*! shortcut for unsigned long*/
-    typedef unsigned long ulong;
-    /*! shortcut for unsigned short*/
-    typedef unsigned short ushort;
-    /*! shortcut for unsigned char*/
-    typedef unsigned char uchar;
+/* typedefine for unsigned category for basic native types */
+/*! shortcut for unsigned int*/
+typedef unsigned int uint;
+/*! shortcut for unsigned long*/
+typedef unsigned long ulong;
+/*! shortcut for unsigned short*/
+typedef unsigned short ushort;
+/*! shortcut for unsigned char*/
+typedef unsigned char uchar;
 #endif
 
-    /*! FORCE_INLINE portable macro */
+/*! FORCE_INLINE portable macro */
 #ifdef _MSVC_VER
 #define FORCE_INLINE    __forceinline
 #elif defined( __linux__ )  || defined( __windows__ )
@@ -136,45 +136,45 @@ extern "C"
 #define FORCE_INLINE __attribute__((always_inline))
 #endif
 
-    /*! define true */
+/*! define true */
 #ifndef true
 #define true (1==1)
 #endif
 
-    /*! define TRUE */
+/*! define TRUE */
 #ifndef TRUE
 #define TRUE true
 #endif
 
-    /*! define false */
+/*! define false */
 #ifndef false
 #define false (1==0)
 #endif
 
-    /*! define FALSE */
+/*! define FALSE */
 #ifndef FALSE
 #define FALSE false
 #endif
 
-    /*!  returned by N_STRLIST functions to tell the caller that the list is empty */
+/*!  returned by N_STRLIST functions to tell the caller that the list is empty */
 #ifndef EMPTY
 #define EMPTY 2
 #endif
 
 
 
-    /*! String or "NULL" string for logging purposes */
+/*! String or "NULL" string for logging purposes */
 #define _str( __PTR ) ((__PTR)?(__PTR):"NULL")
-    /*! String or NULL pointer for testing purposes */
+/*! String or NULL pointer for testing purposes */
 #define _strp( __PTR ) ((__PTR)?(__PTR):NULL)
-    /*! String or " " string for config purposes */
+/*! String or " " string for config purposes */
 #define _strw( __PTR ) ((__PTR)?(__PTR):" ")
-    /*! N_STR or "NULL" string for logging purposes */
+/*! N_STR or "NULL" string for logging purposes */
 #define _nstr( __PTR ) ((__PTR&&__PTR->data)?(__PTR->data):"NULL")
-    /*! N_STR or NULL pointer for testing purposes */
+/*! N_STR or NULL pointer for testing purposes */
 #define _nstrp( __PTR ) ((__PTR&&__PTR->data)?(__PTR->data):NULL)
 
-    /*! Malloc Handler to get errors and set to 0 */
+/*! Malloc Handler to get errors and set to 0 */
 #define Malloc( __ptr , __struct , __size ) \
     errno = 0 ; \
     if ( !(  __ptr  = (  __struct  *)calloc(  __size , sizeof(  __struct  ) ) ) || errno == ENOMEM )   \
@@ -183,7 +183,7 @@ extern "C"
         __ptr = NULL ; \
     }
 
-    /*! Malloca Handler to get errors and set to 0 */
+/*! Malloca Handler to get errors and set to 0 */
 #define Alloca( __ptr , __size ) \
     errno = 0 ; \
     __ptr = alloca( __size ); \
@@ -196,7 +196,7 @@ extern "C"
     memset( __ptr , 0 , __size );
 
 
-    /*! Free Handler to get errors */
+/*! Free Handler to get errors */
 #define Free( __ptr ) \
     if (  __ptr  )\
     {\
@@ -207,7 +207,7 @@ extern "C"
     {\
         n_log( LOG_DEBUG , "Free( %s ) already done or NULL at line %d of %s \n", #__ptr , __LINE__ , __FILE__ );\
     }
-    /*! Free Handler without log */
+/*! Free Handler without log */
 #define FreeNoLog( __ptr )\
     if (  __ptr  )\
     {\
@@ -216,7 +216,7 @@ extern "C"
     }
 
 
-    /*! Realloc Handler to get errors */
+/*! Realloc Handler to get errors */
 #define Realloc( __ptr, __struct , __size )  \
     errno = 0 ; \
     if( !(  __ptr  = (  __struct  *)realloc(  __ptr ,  __size  * sizeof(  __struct  ) ) ) || errno == ENOMEM )\
@@ -225,7 +225,7 @@ extern "C"
         __ptr = NULL;\
     }
 
-    /*! Realloc + zero new memory zone Handler to get errors */
+/*! Realloc + zero new memory zone Handler to get errors */
 #define Reallocz( __ptr, __struct , __old_size , __size )  \
     errno = 0 ; \
     if ( !(  __ptr  = (  __struct  *)realloc(  __ptr , __size  * sizeof(  __struct  ) ) ) || errno == ENOMEM )\
@@ -238,7 +238,7 @@ extern "C"
         if( __size > __old_size )memset( ( __ptr + __old_size ) , 0 , __size - __old_size );\
     }
 
-    /*! macro to assert things */
+/*! macro to assert things */
 #define __n_assert( __ptr , __ret ) \
     if( !(__ptr) ) \
     { \
@@ -246,48 +246,48 @@ extern "C"
         __ret ; \
     }
 
-    /*! TEMP_FAILURE gnu macro portable version */
+/*! TEMP_FAILURE gnu macro portable version */
 #define CALL_RETRY(retvar, expression) do { \
     retvar = (expression); \
 } while (retvar == -1 && errno == EINTR);
 
-    /*! next odd helper */
+/*! next odd helper */
 #define next_odd( __val ) ( (__val)%2 == 0 ) ? (__val) : ( __val + 1 )
 
-    /*! next odd helper */
+/*! next odd helper */
 #define next_even( __val ) ( (__val)%2 == 0 ) ? (__val + 1) : ( __val )
 
 
-    /*! init error checking in a function */
+/*! init error checking in a function */
 #define init_error_check() \
         static int ___error__check_flag = FALSE ;
 
-    /*! error checker type if( !toto ) */
+/*! error checker type if( !toto ) */
 #define ifnull if( !
 
-        /*! error checker type if( 0 != toto ) */
+/*! error checker type if( 0 != toto ) */
 #define ifzero if( 0 ==
 
-    /*! error checker type if( toto == FALSE )  */
+/*! error checker type if( toto == FALSE )  */
 #define iffalse if( FALSE ==
 
-    /*! error checker type if( toto == FALSE )  */
+/*! error checker type if( toto == FALSE )  */
 #define iftrue if( TRUE ==
 
-    /*! check for errors */
+/*! check for errors */
 #define checkerror() if( ___error__check_flag == TRUE ) \
 { n_log( LOG_ERR , "checkerror return false at line %d of %s" , __LINE__ , __FILE__ ); \
 goto error ; \
 }
 
-    /*! close a ifwhatever block */
+/*! close a ifwhatever block */
 #define endif ){ ___error__check_flag = TRUE ; n_log( LOG_ERR , "First err was at line %d of %s" , __LINE__ , __FILE__ );}
 
-    /*! pop up errors if any */
+/*! pop up errors if any */
 #define get_error() \
 (___error__check_flag == TRUE)
 
-    /*! if( a , condition, b ) then a = b */
+/*! if( a , condition, b ) then a = b */
 #define equal_if( __a , __cond , __b ) if( (__a) __cond (__b) ){ __a = __b ; }
 
 #ifdef RWLOCK_DEBUG
@@ -296,7 +296,7 @@ goto error ; \
 #define RWLOCK_LOGLEVEL LOG_NULL
 #endif
 
-    /*! Macro for initializing a rwlock */
+/*! Macro for initializing a rwlock */
 #ifdef SOLARIS
 #define init_lock( __rwlock_mutex ) \
         ({ \
@@ -337,7 +337,7 @@ goto error ; \
          })
 #endif
 
-    /*! Macro for acquiring a read lock on a rwlock mutex */
+/*! Macro for acquiring a read lock on a rwlock mutex */
 #define read_lock( __rwlock_mutex ) \
         ({ \
          int __ret = 0 ; \
@@ -353,7 +353,7 @@ goto error ; \
          __ret ; \
          })
 
-    /*! Macro for acquiring a write lock on a rwlock mutex */
+/*! Macro for acquiring a write lock on a rwlock mutex */
 #define write_lock( __rwlock_mutex ) \
         ({ \
          int __ret = 0 ; \
@@ -369,7 +369,7 @@ goto error ; \
          __ret ; \
          })
 
-    /*! Macro for releasing read/write lock a rwlock mutex */
+/*! Macro for releasing read/write lock a rwlock mutex */
 #define unlock( __rwlock_mutex ) \
         ({ \
          int __ret = 0 ; \
@@ -384,7 +384,7 @@ goto error ; \
          } while( 0 ); \
          __ret ; \
          })
-    /*! Macro to destroy rwlock mutex */
+/*! Macro to destroy rwlock mutex */
 #define rw_lock_destroy( __rwlock_mutex ) \
         ({ \
          int __ret = 0 ; \
@@ -400,61 +400,61 @@ goto error ; \
          __ret ; \
          })
 
-    /*! Flag for SET something , passing as a function parameter */
+/*! Flag for SET something , passing as a function parameter */
 #define SET        1234
-    /*! Flag for GET something , passing as a function parameter */
+/*! Flag for GET something , passing as a function parameter */
 #define GET        4321
-    /*! Default APP_STATUS Value */
+/*! Default APP_STATUS Value */
 #define DEFAULT    1000
-    /*! Value of the state of an application who is running */
+/*! Value of the state of an application who is running */
 #define RUNNING    1001
-    /*! Value of the state of an application who want to stop his activity */
+/*! Value of the state of an application who want to stop his activity */
 #define STOPWANTED 1002
-    /*! Value of the state of an application who is stopped */
+/*! Value of the state of an application who is stopped */
 #define STOPPED    1003
-    /*! Value of the state of an application who is paused */
+/*! Value of the state of an application who is paused */
 #define PAUSED     1004
 
-    /*! Initialize the random sequence with time */
+/*! Initialize the random sequence with time */
 #define randomize() { srand((unsigned)time(NULL)); rand(); }
 
 #ifndef MIN
-    /*! define MIN macro */
+/*! define MIN macro */
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #endif
 #ifndef MAX
-    /*! define MIN macro */
+/*! define MIN macro */
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #endif
 
 #ifndef __windows__
-    int n_daemonize( void );
+int n_daemonize( void );
 #endif
 
-    /* exit and print log to stderr */
-    void n_abort( char const *format, ... );
+/* exit and print log to stderr */
+void n_abort( char const *format, ... );
 
-    /* get running program name */
-    char *get_prog_name( void );
+/* get running program name */
+char *get_prog_name( void );
 
-    /* get running program directory */
-    char *get_prog_dir( void );
+/* get running program directory */
+char *get_prog_dir( void );
 
-    /* test file presence*/
-    int file_exist( const char *filename );
+/* test file presence*/
+int file_exist( const char *filename );
 
-    /* shortcut for popen usage */
-    int n_popen( char *cmd, int read_buf_size, void **nstr_output, int *ret );
+/* shortcut for popen usage */
+int n_popen( char *cmd, int read_buf_size, void **nstr_output, int *ret );
 
-    /* non blocking system call */
-    pid_t system_nb(const char * command, int * infp, int * outfp);
+/* non blocking system call */
+pid_t system_nb(const char * command, int * infp, int * outfp);
 
-    /**
-      @}
-      */
+/**
+  @}
+  */
 
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #endif /* #ifndef __COMMON_FOR_C_IMPLEMENTATION__ */

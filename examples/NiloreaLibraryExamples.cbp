@@ -44,19 +44,16 @@
 		<Unit filename="ex_common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_common_applog.txt" />
 		<Unit filename="ex_configfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ex_configfile.cfg" />
-		<Unit filename="ex_configfile_applog.txt" />
 		<Unit filename="ex_debug_mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ex_exceptions.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_exceptions_applog.txt" />
 		<Unit filename="ex_gui.cfg" />
 		<Unit filename="ex_gui_netclient.c">
 			<Option compilerVar="CC" />
@@ -70,34 +67,25 @@
 		<Unit filename="ex_hash.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_hash_applog.txt" />
 		<Unit filename="ex_list.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_list_applog.txt" />
 		<Unit filename="ex_log.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_log_applog.txt" />
 		<Unit filename="ex_monolith.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_monolith_applog.txt" />
 		<Unit filename="ex_network.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ex_network.h" />
-		<Unit filename="ex_network_applog.txt" />
-		<Unit filename="ex_network_debugmem.txt" />
-		<Unit filename="ex_network_debugmem_server.txt" />
 		<Unit filename="ex_nstr.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_nstr_applog.txt" />
 		<Unit filename="ex_pcre.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="ex_pcre_applog.txt" />
 		<Unit filename="ex_signals.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -105,9 +93,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="serveur.cfg" />
-		<Unit filename="sslexample.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="valgrind-suppressions.cfg" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

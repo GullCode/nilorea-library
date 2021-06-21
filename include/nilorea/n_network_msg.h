@@ -94,7 +94,7 @@ NETW_MSG *make_msg_from_str( N_STR *str );
 
 N_STR *netmsg_make_ping( int type, int id_from, int id_to, int time );
 N_STR *netmsg_make_ident( int type, int id, N_STR *name, N_STR *passwd );
-N_STR *netmsg_make_position_msg( int id , double X , double Y , double vx , double vy , double acc_x , double acc_y , int time_stamp );
+N_STR *netmsg_make_position_msg( int id, double X, double Y, double vx, double vy, double acc_x, double acc_y, int time_stamp );
 N_STR *netmsg_make_string_msg( int id_from, int id_to, N_STR *name, N_STR *chan, N_STR *txt, int color );
 N_STR *netmsg_make_quit_msg( void );
 

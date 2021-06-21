@@ -18,6 +18,8 @@ examples/ex_pcre
 examples/ex_threads
 examples/ex_debug_mem
 examples/sslexample.c
+examples/ex_gui_netclient
+examples/ex_gui_netserver
 api_nilorea/*
 api_nilorea/*.*
 *.new
