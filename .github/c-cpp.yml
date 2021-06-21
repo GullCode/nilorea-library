@@ -1,0 +1,35 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master , dev ]
+  pull_request:
+    branches: [ master , dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache packages
+      uses: actions/cache@v2
+      with:
+        key: nilorea-library-cache
+        path: |
+          ~/apt-cache 
+    - name: install dependencies
+      run: |
+        export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+        sudo apt-get update -yq && sudo apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -y liballegro5-dev valgrind
+    - name: make library
+      run: make
+    - name: make examples
+      run: |
+        cd examples
+        make
+        cd ..
+    - name: make tests
+      run: |
+        cd examples
+        ./valgrind.sh
+        cd ..
